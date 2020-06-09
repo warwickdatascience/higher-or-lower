@@ -46,80 +46,20 @@ server <- function(input, output, session) {
   output$celeb_1_ui <- renderUI({create_celeb_ui(state$celeb_1)})
   output$celeb_2_ui <- renderUI({create_celeb_ui(state$celeb_2)})
 
-  onclick('celeb_1_box_inner', {
-    if (state$celeb_1$visible) {
-      hidden_celeb <- state$celeb_2$name
-      hidden_followers <- state$celeb_2$followers
-    } else {
-      hidden_celeb <- state$celeb_1$name
-      hidden_followers <- state$celeb_1$followers
-    }
-    if (state$celeb_1$followers >= state$celeb_2$followers) {
-      sendSweetAlert(
-        title = 'Spot on!',
-        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
-        session = session,
-        type = 'success',
-        btn_labels = "Continue"
-      )
-      state$score <- state$score + 1
-    } else {
-      sendSweetAlert(
-        title = 'Not quite!',
-        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
-        session = session,
-        type = 'error',
-        btn_labels = "Continue"
-      )
-      state$lives <- state$lives - 1
-    }
-    if (state$celeb_1$visible) {
-      state$celeb_2$visible <- TRUE
-      state$celeb_1 <- random_celeb(exclude = state$celeb_2$name,
-                                    visible = FALSE)
-    } else {
-      state$celeb_1$visible <- TRUE
-      state$celeb_2 <- random_celeb(exclude = state$celeb_1$name,
-                                    visible = FALSE)
-    }
+  onclick('celeb_1_box', {
+    update_state(
+      clicked_celeb_id = 1,
+      other_celeb_id = 2,
+      state, session
+    )
   })
 
-  onclick('celeb_2_box_inner', {
-    if (state$celeb_2$visible) {
-      hidden_celeb <- state$celeb_1$name
-      hidden_followers <- state$celeb_1$followers
-    } else {
-      hidden_celeb <- state$celeb_2$name
-      hidden_followers <- state$celeb_2$followers
-    }
-    if (state$celeb_2$followers >= state$celeb_1$followers) {
-      sendSweetAlert(
-        title = 'Spot on!',
-        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
-        session = session,
-        type = 'success',
-        btn_labels = "Continue"
-      )
-      state$score <- state$score + 1
-    } else {
-      sendSweetAlert(
-        title = 'Not quite!',
-        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
-        session = session,
-        type = 'error',
-        btn_labels = "Continue"
-      )
-      state$lives <- state$lives - 1
-    }
-    if (state$celeb_1$visible) {
-      state$celeb_2$visible <- TRUE
-      state$celeb_1 <- random_celeb(exclude = state$celeb_2$name,
-                                    visible = FALSE)
-    } else {
-      state$celeb_1$visible <- TRUE
-      state$celeb_2 <- random_celeb(exclude = state$celeb_1$name,
-                                    visible = FALSE)
-    }
+  onclick('celeb_2_box', {
+    update_state(
+      clicked_celeb_id = 2,
+      other_celeb_id = 1,
+      state, session
+    )
   })
 
   observeEvent(state$lives, {

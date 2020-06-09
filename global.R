@@ -56,3 +56,43 @@ create_celeb_ui <- function(celeb) {
     )
   )
 }
+
+update_state <- function(clicked_celeb_id, other_celeb_id, state, session) {
+  clicked_celeb <- state[[paste0('celeb_', clicked_celeb_id)]]
+  other_celeb <- state[[paste0('celeb_', other_celeb_id)]]
+  if (clicked_celeb$visible) {
+    hidden_celeb <- other_celeb$name
+    hidden_followers <- other_celeb$followers
+  } else {
+    hidden_celeb <- clicked_celeb$name
+    hidden_followers <- clicked_celeb$followers
+  }
+  if (clicked_celeb$followers >= other_celeb$followers) {
+    sendSweetAlert(
+      title = 'Spot on!',
+      text = paste(hidden_celeb, "has", hidden_followers, "followers"),
+      session = session,
+      type = 'success',
+      btn_labels = "Continue"
+    )
+    state$score <- state$score + 1
+  } else {
+    sendSweetAlert(
+      title = 'Not quite!',
+      text = paste(hidden_celeb, "has", hidden_followers, "followers"),
+      session = session,
+      type = 'error',
+      btn_labels = "Continue"
+    )
+    state$lives <- state$lives - 1
+  }
+  if (clicked_celeb$visible) {
+    state[[paste0('celeb_', other_celeb_id)]]$visible <- TRUE
+    state[[paste0('celeb_', clicked_celeb_id)]] <-
+      random_celeb(exclude = other_celeb$name, visible = FALSE)
+  } else {
+    state[[paste0('celeb_', clicked_celeb_id)]]$visible <- TRUE
+    state[[paste0('celeb_', other_celeb_id)]] <-
+      random_celeb(exclude = other_celeb$name, visible = FALSE)
+  }
+}
