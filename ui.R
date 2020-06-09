@@ -7,24 +7,31 @@ ui <- dashboardPage(
         title = "WDSS Presents: Higher or Lower",
         titleWidth = 350,
         tags$li(
-            actionLink("openModal", label = "", icon = icon("question")),
-            class = "dropdown"
-        ),
-        tags$li(
-            a(
-                href = NULL,
-                icon("file-alt"),
-                title = "Write-up",
-                style = "cursor: pointer;"
+            actionLink(
+                "open_modal",
+                label = "",
+                title = "Help",
+                icon = icon("question")
             ),
             class = "dropdown"
         ),
         tags$li(
             a(
-                href = NULL,
+                href = paste0('https://research.warwickdatascience.com/',
+                              'higher-or-lower'),
+                target = '_blank',
+                icon("file-alt"),
+                title = "Write-up",
+            ),
+            class = "dropdown"
+        ),
+        tags$li(
+            a(
+                href = paste0('https://github.com/warwickdatascience/',
+                              'higher-or-lower'),
+                target = '_blank',
                 icon("github"),
                 title = "Source",
-                style = "cursor: pointer;"
             ),
             class = "dropdown"
         )
@@ -37,15 +44,16 @@ ui <- dashboardPage(
                       href = 'style.css')
         ),
         tags$head(
-            tags$script(
-                '$(document).on("shiny:connected", function(e) {
-             Shiny.onInputChange("page_width", window.innerWidth);
-             Shiny.onInputChange("page_height", window.innerHeight);
-         });
-         $(window).resize(function(e) {
-             Shiny.onInputChange("page_width", window.innerWidth);
-             Shiny.onInputChange("page_height", window.innerHeight);
-         });'
+            # Setup Javascript to create responsive layout
+            tags$script('
+                $(document).on("shiny:connected", function(e) {
+                    Shiny.onInputChange("page_width", window.innerWidth);
+                    Shiny.onInputChange("page_height", window.innerHeight);
+                });
+                $(window).resize(function(e) {
+                    Shiny.onInputChange("page_width", window.innerWidth);
+                    Shiny.onInputChange("page_height", window.innerHeight);
+                });'
             )
         ),
         useShinyjs(),

@@ -172,7 +172,7 @@ server <- function(input, output, session) {
     state$celeb_2 <- celebs[[2]]
   })
 
-  observeEvent(input$openModal, {
+  observeEvent(input$open_modal, {
     showModal(
       modalDialog(title = "Help",
                   p(paste(
