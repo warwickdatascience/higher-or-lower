@@ -35,3 +35,24 @@ initial_choice <- function() {
   celeb_2 = random_celeb(exclude = celeb_1$name, visible = !celeb_1_visible)
   return(list(celeb_1 = celeb_1, celeb_2 = celeb_2))
 }
+
+#' Create the UI for a celebrity given a list of their details
+#'
+#' @param celeb A list of details for a celebrity
+#' @return A collection of tags for the celebrity UI
+create_celeb_ui <- function(celeb) {
+  tags$div(
+    class = 'celeb',
+    tags$div(class = 'picture',
+             tags$img(class = 'img-fluid', src = celeb$image_path)
+    ),
+    tags$div(
+      class = 'details',
+      tags$h4(class = 'celeb_name', celeb$name),
+      tags$h4(class = 'followers', ifelse(celeb$visible,
+                                          paste(celeb$followers,
+                                                "followers"),
+                                          ""))
+    )
+  )
+}

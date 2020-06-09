@@ -30,7 +30,7 @@ server <- function(input, output, session) {
   output$state_ui <- renderUI({
     req(input$page_width)
     absolutePanel(
-      bottom = 10,
+      bottom = 0,
       left = input$page_width / 2 - 100,
       width = 200,
       wellPanel(
@@ -43,39 +43,8 @@ server <- function(input, output, session) {
     )
   })
 
-  output$celeb_1_ui <- renderUI({
-    tags$div(
-      class = 'celeb',
-      tags$div(class = 'picture',
-               tags$img(class = 'img-fluid', src = state$celeb_1$image_path)
-      ),
-      tags$div(
-        class = 'details',
-        tags$h4(class = 'celeb_name', state$celeb_1$name),
-        tags$h4(class = 'followers', ifelse(state$celeb_1$visible,
-                                            paste(state$celeb_1$followers,
-                                                  "followers"),
-                                            ""))
-      )
-    )
-  })
-
-  output$celeb_2_ui <- renderUI({
-    tags$div(
-      class = 'celeb',
-      tags$div(class = 'picture',
-               tags$img(class = 'img-fluid', src = state$celeb_2$image_path)
-      ),
-      tags$div(
-        class = 'details',
-        tags$h4(class = 'celeb_name', state$celeb_2$name),
-        tags$h4(class = 'followers', ifelse(state$celeb_2$visible,
-                                            paste(state$celeb_2$followers,
-                                                  "followers"),
-                                            ""))
-      )
-    )
-  })
+  output$celeb_1_ui <- renderUI({create_celeb_ui(state$celeb_1)})
+  output$celeb_2_ui <- renderUI({create_celeb_ui(state$celeb_2)})
 
   onclick('celeb_1_box_inner', {
     if (state$celeb_1$visible) {
