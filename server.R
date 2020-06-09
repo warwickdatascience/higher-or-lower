@@ -64,14 +64,18 @@ server <- function(input, output, session) {
 
   observeEvent(state$lives, {
     req(state$lives <= 0)
-    sendSweetAlert(
+    confirmSweetAlert(
       title = "You're out of lives!",
+      inputId = 'play_again',
       text = paste("Your final score was", state$score),
       session = session,
       type = 'warning',
-      btn_labels = "Play again"
+      btn_labels = "Play again",
+      btn_colors = '#3085d6'
     )
+  })
 
+  observeEvent(input$play_again, {
     celebs <- initial_choice()
     state$score <- 0
     state$lives <- 3
