@@ -3,6 +3,7 @@ library(shinyWidgets)
 
 server <- function(input, output, session) {
 
+  # Setup initial game state
   celebs <- initial_choice()
   state <- reactiveValues(score = 0,
                           lives = 3,
@@ -11,21 +12,18 @@ server <- function(input, output, session) {
 
   output$body_ui <- renderUI({
     req(input$page_width, input$page_height)
-    if (input$page_width <= 750) {
+    if (input$page_width <= 750) {  # mobile layout
       box_height = (input$page_height - 100) / 2 - 38
-    } else {
+    } else {  # desktop layout
       box_height = (input$page_height - 50) - 53
     }
       fluidRow(
-        tags$div(id = 'celeb_1_box',
-                 box(uiOutput('celeb_1_ui'), width = 6,
-                     height = box_height, background = 'red',
-                     id = 'celeb_1_box_inner'),
-                 style = "cursor: pointer;"),
-        tags$div(id = 'celeb_2_box',
-                 box(uiOutput('celeb_2_ui'), width = 6,
-                     height = box_height, background = 'blue'),
-                 style = "cursor: pointer;")
+        box(uiOutput('celeb_1_ui'), width = 6,
+            height = box_height, background = 'red',
+            id = 'celeb_1_box', class = 'celeb_box'),
+        box(uiOutput('celeb_2_ui'), width = 6,
+            height = box_height, background = 'blue',
+            id = 'celeb_2_box', class = 'celeb_box'),
       )
   })
 
@@ -79,7 +77,7 @@ server <- function(input, output, session) {
     )
   })
 
-  onclick('celeb_1_box', {
+  onclick('celeb_1_box_inner', {
     if (state$celeb_1$visible) {
       hidden_celeb <- state$celeb_2$name
       hidden_followers <- state$celeb_2$followers
@@ -117,7 +115,7 @@ server <- function(input, output, session) {
     }
   })
 
-  onclick('celeb_2_box', {
+  onclick('celeb_2_box_inner', {
     if (state$celeb_2$visible) {
       hidden_celeb <- state$celeb_1$name
       hidden_followers <- state$celeb_1$followers
