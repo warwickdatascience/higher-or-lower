@@ -93,6 +93,6 @@ update_state <- function(clicked_celeb_id, other_celeb_id, state, session) {
   } else {
     state[[paste0('celeb_', clicked_celeb_id)]]$visible <- TRUE
     state[[paste0('celeb_', other_celeb_id)]] <-
-      random_celeb(exclude = other_celeb$name, visible = FALSE)
+      random_celeb(exclude = clicked_celeb$name, visible = FALSE)
   }
 }
