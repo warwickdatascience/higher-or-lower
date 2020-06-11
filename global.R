@@ -77,13 +77,15 @@ update_state <- function(clicked_celeb_id, other_celeb_id, state, session) {
     )
     state$score <- state$score + 1
   } else {
-    sendSweetAlert(
-      title = 'Not quite!',
-      text = paste(hidden_celeb, "has", hidden_followers, "followers"),
-      session = session,
-      type = 'error',
-      btn_labels = "Continue"
-    )
+    if (state$lives > 1) {
+      sendSweetAlert(
+        title = 'Not quite!',
+        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
+        session = session,
+        type = 'error',
+        btn_labels = "Continue"
+      )
+    }
     state$lives <- state$lives - 1
   }
   if (clicked_celeb$visible) {
