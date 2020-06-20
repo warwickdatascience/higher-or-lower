@@ -6,7 +6,7 @@ celeb_df <- read_csv('resources/twitter_details.csv',
 
 # Filter out 'celebrities'
 celeb_df <- celeb_df %>%
-  filter(followers >= 2 * 10 ^ 5)
+  filter(followers >= 5 * 10 ^ 5)
 
 #' Sample a random celebrity from the scraped data and return their details
 #'
