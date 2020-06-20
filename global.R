@@ -1,8 +1,12 @@
 library(dplyr)
 library(readr)
 
-celeb_df <- read_csv('resources/sample_data.csv',
-                     col_types = 'cdc')
+celeb_df <- read_csv('resources/twitter_details.csv',
+                     col_types = 'cccic')
+
+# Filter out 'celebrities'
+celeb_df <- celeb_df %>%
+  filter(followers >= 2 * 10 ^ 5)
 
 #' Sample a random celebrity from the scraped data and return their details
 #'
@@ -50,9 +54,10 @@ create_celeb_ui <- function(celeb) {
       class = 'details',
       tags$h4(class = 'celeb_name', celeb$name),
       tags$h4(class = 'followers', ifelse(celeb$visible,
-                                          paste(celeb$followers,
+                                          paste(format(celeb$followers,
+                                                       big.mark = ','),
                                                 "followers"),
-                                          ""))
+                                          "?"))
     )
   )
 }
@@ -70,7 +75,8 @@ update_state <- function(clicked_celeb_id, other_celeb_id, state, session) {
   if (clicked_celeb$followers >= other_celeb$followers) {
     sendSweetAlert(
       title = 'Spot on!',
-      text = paste(hidden_celeb, "has", hidden_followers, "followers"),
+      text = paste(hidden_celeb, "has",
+                   format(hidden_followers, big.mark = ','), "followers"),
       session = session,
       type = 'success',
       btn_labels = "Continue"
@@ -80,7 +86,8 @@ update_state <- function(clicked_celeb_id, other_celeb_id, state, session) {
     if (state$lives > 1) {
       sendSweetAlert(
         title = 'Not quite!',
-        text = paste(hidden_celeb, "has", hidden_followers, "followers"),
+        text = paste(hidden_celeb, "has",
+                     format(hidden_followers, big.mark = ','), "followers"),
         session = session,
         type = 'error',
         btn_labels = "Continue"
