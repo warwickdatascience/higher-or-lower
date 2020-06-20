@@ -5,29 +5,62 @@
 .celeb_box {
   height: 100%;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
+.celeb_box:hover .picture {
+  transform: scale(1.1);
+  transition: all 0.5s ease 0.1s;
+}
+
+/*
+#celeb_1_ui {
+  height: 100%;
+  width: 100%;
+}
+*/
+
 .celeb {
-  padding: 30px 0 40px;
-  margin-bottom: 30px;
+  /*padding: 30px 0 40px;
+  margin-bottom: 30px;*/
   text-align: center;
-  overflow: hidden;
   position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .celeb .picture {
   display: inline-block;
-  height: 130px;
-  width: 130px;
-  margin-bottom: 50px;
+  margin-bottom: calc(0.25vh + 0.75vw);
   z-index: 1;
   position: relative;
+  transition: all 0.5s ease 0.1s;
+  height: 100%;
+  width: 100%;
 }
 
 .celeb .picture img {
-  width: 100%;
-  height: auto;
   border-radius: 50%;
-  transform: scale(1);
-  transition: all 0.9s ease 0s;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  /*transform: scale(1);
+  transition: all 0.9s ease 0s;*/
+  height: calc(4vh + 12vw);
+  width: auto;
+}
+
+.celeb .details {
+  height: 100%;
+  width: 100%;
+}
+
+.celeb .details .celeb_name {
+  font-size: calc(1vh + 3vw);  
+}
+
+.celeb .details .followers {
+  font-size: calc(1vh + 3vw);
 }
