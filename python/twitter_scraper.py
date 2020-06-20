@@ -51,8 +51,8 @@ def get_celeb_twitters(verbose=True):
         for p in para:
             if p.find('a', recursive=False) and \
                     p.find('strong', recursive=False):
-                # Remove possessive form and question marks
-                name = re.sub(r'[\?(?:\'s)]*$', '', p.strong.text.strip())
+                strong = p.find_all('strong')
+                name = strong[-1].text.strip().replace(':', '')
                 twitter_urls[name] = p.a['href']
                 found += 1
         if verbose:
