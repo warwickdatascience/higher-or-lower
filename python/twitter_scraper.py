@@ -82,7 +82,7 @@ if __name__ == "__main__":
         'followers': [],
         'image_path': []
     }
-    for i, (name, url) in tqdm(enumerate(twitter_urls.items())):
+    for i, (name, url) in tqdm(twitter_urls.items()):
         uname = re.search('twitter.com/(.*)', url).group(1)
         
         # Special case
