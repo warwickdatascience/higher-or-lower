@@ -96,9 +96,7 @@ if __name__ == "__main__":
             details['uname'].append(uname)
             details['followers'].append(user.followers_count)
 
-            print(uname)
             pp_url = user.profile_image_url.replace('_normal', '')
-            print(pp_url)
             pp_type = re.search(r'\.(\w+)$', pp_url).group(1)
             r = requests.get(pp_url, stream=True)
             r.raw.decode_content = True
